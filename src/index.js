@@ -1,6 +1,5 @@
 import './style.css';
-import { project } from "./proyect";
-
+import { project } from "./project";
 
 
 
