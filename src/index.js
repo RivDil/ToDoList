@@ -1,4 +1,6 @@
-import { createTodo } from "./Todo";
-import { createProject } from "./proyect";
+import './style.css';
+import { project } from "./proyect";
 
-createProject(luis);
+
+
+
