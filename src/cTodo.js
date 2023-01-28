@@ -7,7 +7,6 @@ export function createTodo({
     name = requiredParam('name'),
     description = ('description'),
     dueDate = new Date(),
-    check = false,
 }={}){
-    return {name , description, dueDate, check}
+    return {name , description, dueDate}
 }
