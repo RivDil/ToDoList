@@ -43,6 +43,15 @@ main{
 .projectBtn{
     background-color: whitesmoke;
     border: none;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;
+    cursor: pointer;
+    transition: all 0.2s ease-in;
+    padding: 5px;
+    border-radius: 20px;
+}
+.projectBtn:hover{
+    background-color: antiquewhite;
+    transition: all 0.2s ease-in;
 
 }
 #projects-list{
@@ -57,8 +66,14 @@ main{
 .eraseProjectBtn{
     background-color: whitesmoke;
     border: none;
-
+    transition: all 0.2s ease-in;
+    cursor: pointer;
 }
+.eraseProjectBtn:hover{
+    color: red;
+    transition: all 0.2s ease-in;
+}
+
 #create-new-project{
     border: none;
     background-color: whitesmoke;
@@ -142,4 +157,9 @@ main{
 #todo-form button{
     border: none;
     border-radius: 25px;
+}
+.project-submit-btn{
+    color: red;
+    font-family: monospace;
+    font-size: xx-small;
 }

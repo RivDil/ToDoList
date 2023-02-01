@@ -4,7 +4,7 @@ import { project } from "./project";
 
 export const DOM_EVENTS = () => {
         
-    
+
     const renderProjects = (projects) => {
         let projectsContainer = document.getElementById("projects-list");
         projectsContainer.innerHTML = ""; // clearing the container
@@ -16,17 +16,21 @@ export const DOM_EVENTS = () => {
                 <button class='projectBtn'>${projectI.getName()}</button><button class='eraseProjectBtn'>X</button>
             </div>
             `;
-            projectElement.addEventListener("click", function(){
+            let projectBtn = projectElement.querySelector('.projectBtn'); // select the button element
+            projectBtn.addEventListener("click", function(){
                 showTodos(projectI);
-                project.setCurrentProject(projectI);          
+                project.setCurrentProject(projectI); 
+                projectTitle(projectI.getName())         
             });
+            let eraseProjectBtn = projectElement.querySelector('.eraseProjectBtn');
+            eraseProjectBtn.addEventListener('click',function(){
+                eliminateProject()
+            })
             projectsContainer.appendChild(projectElement);
         }
     }
     
-    const showProjects = (() => {
-        renderProjects(project.allProjects);
-    })();
+
     
     const showTodos = (project) => {
         let todos = project.getTodos();
@@ -53,23 +57,64 @@ export const DOM_EVENTS = () => {
         form.addEventListener('submit', (event)=>{
             event.preventDefault();
             let currentProject = project.getCurrentProject();
-            console.log(currentProject)
             let name = form.querySelector('input[name="task-name"]').value;
             let description = form.querySelector('input[name="task-description"]').value;
             let dueDate = form.querySelector('input[name="due-date"]').value;
             currentProject.addTodos({name: name,description: description,dueDate: dueDate});
-            showTodos(currentProject)           
+            form.querySelector('input[name="task-name"]').value = '';
+            form.querySelector('input[name="task-description"]').value = '';
+            form.querySelector('input[name="due-date"]').value = '';
+            showTodos(currentProject)
+
         });
     })();
 
     const createProject = (() => {
         let formProject = document.getElementById('new-project-form');
         let nameProject = document.getElementById('new-project-form-input');
+        let newProject = document.getElementById('create-new-project');
+        let error = document.createElement('p')
+        error.classList.add('project-submit-btn')
         formProject.addEventListener('submit', (event)=>{
             event.preventDefault();
-            new project(nameProject.value)
-            renderProjects(project.allProjects) // call the function to render the new project
-            nameProject.value = '';
+            if (nameProject.value == ''){
+                error.innerHTML = 'The project name cannot be blank';
+                formProject.appendChild(error)
+            }else{
+                error.innerHTML = '';
+                new project(nameProject.value)
+                renderProjects(project.allProjects) // call the function to render the new project
+                nameProject.value = '';
+                formProject.classList.add('hidden')
+                newProject.classList.remove('hidden')
+                newProject.classList.add('active')
+            }
         });
     })();
+
+    const eliminateProject = () => {
+        let eraseProjectBtns = document.querySelectorAll('.eraseProjectBtn');
+        eraseProjectBtns.forEach(btn => {
+            btn.addEventListener('click', event => {
+                let projectElement = event.target.parentElement.querySelectorAll('.projectBtn');
+                let projectName = projectElement.textContent;
+                console.log(projectElement)
+                let projectIndex = project.allProjects.map(e => e.name).indexOf(projectName);
+                console.log(project.allProjects)
+                project.allProjects.splice(projectIndex, 1); // we eliminate it. we have to reference project because it's a static property
+                console.log('eliminated')
+                renderProjects(project.allProjects)
+            });
+        });
+    };
+
+    const projectTitle = (project) =>{
+        let title = document.getElementById('projectTitle')
+        title.innerHTML = project
+    }
+
+    const showProjects = (() => {
+        renderProjects(project.allProjects);
+    })();
+    
 }

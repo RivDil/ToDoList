@@ -18,7 +18,7 @@ export class project{
         project.allProjects.push(this);
         project.currentProject = this;
         
-    }
+    }    
     setCurrentProject(project){
         this.currentProject = project;
     }
@@ -41,11 +41,5 @@ export class project{
         if (index > -1) { 
             this.todos.splice(index, 1);
           }
-    }
-    eliminateProject(){
-        let index = project.allProjects.indexOf(this); //we look for the index of the project we look to eliminate
-        if (index > -1) { 
-            project.allProjects.splice(index, 1); // we eliminate it. we have to reference project because it's a static property
-        }
     }
 }
