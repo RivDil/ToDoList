@@ -7,7 +7,7 @@ export const DOM_CONTENT = () =>{
         header.className = 'header';
         header.innerHTML = `
         <div class="logo">TuDu</div>
-        <h4 id='projectTitle'>Inbox</h4>
+        <h4 id='projectTitle'>Choose a Project!</h4>
         `;
         element.appendChild(header)
     })();
@@ -17,7 +17,6 @@ export const DOM_CONTENT = () =>{
         const main = document.createElement('main');
         main.innerHTML = `
         <section class="menu">
-            <button class="btn active" id="inbox">Inbox</button>
             <h3 class="project-section-title">Projects</h3>           
             <button class="btn active" id="create-new-project">Create new project</button>
             <form id='new-project-form' class='hidden'>

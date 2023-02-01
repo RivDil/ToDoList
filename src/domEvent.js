@@ -41,17 +41,56 @@ export const DOM_EVENTS = () => {
             let todoElement = document.createElement("div");
             todoElement.setAttribute('id','card-container')
             todoElement.innerHTML = `
-                <button id='checkbtn'></button>
+            <div id='card-container-information'>
+                <button class='checkbtn'></button>
                 <div id='card-information'>
                 <h3>${todo.name}</h3>
                 <h3>${todo.dueDate}</h3>
                 <p>${todo.description}<p>
                 </div>
+            </div>
+                <div id='card-modifier-btn'>
+                    <button class='editbtn'>Edit</button>
+                    <button class='erasebtn'>Erase</button>
+                </div>
             `;
             todoElement.classList.add('todo-element');
             todosContainer.appendChild(todoElement);
-        }
+            let eraseBtn = todoElement.querySelector('.erasebtn');
+            eraseBtn.addEventListener("click", function(event) {
+              let task = event.target.parentElement.parentElement;
+              let taskIndex = todos.indexOf(todos[i]);
+              project.todos.splice(taskIndex, 1);
+              task.remove();
+            });
+            let editBtn = todoElement.querySelector('.editbtn');
+            editBtn.addEventListener("click", function(event) {
+              let task = event.target.parentElement.parentElement;
+              let taskIndex = Array.from(todosContainer.children).indexOf(task);
+              let todo = todos[taskIndex];
+          
+              let newName = prompt("Enter the new name", todo.name);
+              let newDueDate = prompt("Enter the new due date", todo.dueDate);
+              let newDescription = prompt("Enter the new description", todo.description);
+          
+              todo.name = newName;
+              todo.dueDate = newDueDate;
+              todo.description = newDescription;
+          
+              showTodos(project);
+            });
+            let checkbtn = todoElement.querySelector('.checkbtn');
+            checkbtn.addEventListener('click', function(event){
+                    let element = event.target.parentElement;
+                    if (element.classList.contains('checked')) {
+                        element.classList.remove('checked');
+                    }else {
+                        element.classList.add('checked');
+                    }
+                })
+            }
     }
+    
     const addTodos = (() => {
         let form = document.getElementById('todo-form')
         form.addEventListener('submit', (event)=>{
@@ -96,13 +135,10 @@ export const DOM_EVENTS = () => {
         let eraseProjectBtns = document.querySelectorAll('.eraseProjectBtn');
         eraseProjectBtns.forEach(btn => {
             btn.addEventListener('click', event => {
-                let projectElement = event.target.parentElement.querySelectorAll('.projectBtn');
+                let projectElement = event.target.parentElement.querySelector('.projectBtn');
                 let projectName = projectElement.textContent;
-                console.log(projectElement)
                 let projectIndex = project.allProjects.map(e => e.name).indexOf(projectName);
-                console.log(project.allProjects)
                 project.allProjects.splice(projectIndex, 1); // we eliminate it. we have to reference project because it's a static property
-                console.log('eliminated')
                 renderProjects(project.allProjects)
             });
         });
@@ -115,6 +151,7 @@ export const DOM_EVENTS = () => {
 
     const showProjects = (() => {
         renderProjects(project.allProjects);
+        eliminateProject()
     })();
     
 }

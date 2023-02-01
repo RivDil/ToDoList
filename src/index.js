@@ -5,20 +5,10 @@ import { DOM_EVENTS } from './domEvent';
 
 
 
-const luis = new project('luis');
+const predetermined = new project('Default');
 
-const gabriela = new project ('gabriela');
-gabriela.addTodos({name: 'desayuno', description: 'tengo hamrbe'})
-gabriela.addTodos({name: 'almuerzo', description: 'tengo hamrbe'})
-luis.addTodos({name: 'comer', description: 'tengo hamrbe'})
-luis.addTodos({name: 'saludar', description: 'tengo hamrbe'})
-let gabrielaAl = gabriela.getTodos();
-let luisal = luis.getTodos();
-console.log(gabrielaAl);
-console.log(luisal);
-console.log(luis.getName())
+predetermined.addTodos({name: 'Learn to program', description: 'This is a To do List!',dueDate:'Today'})
 
-console.log(typeof(luis))
 
 
 
